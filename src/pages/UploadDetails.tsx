@@ -369,7 +369,7 @@ const UploadDetails = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-cream">
+    <div className="min-h-screen bg-gradient-cream pb-32 sm:pb-24">
       <div className="p-3 sm:p-6">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
@@ -500,29 +500,28 @@ const UploadDetails = () => {
         </Tabs>
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-8">
-          <div className="flex items-center gap-3 order-2 sm:order-1">
-            <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-success" />
-            <span className="text-xs sm:text-sm text-muted-foreground">
-              Auto-saved 30 seconds ago
-            </span>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 order-1 sm:order-2">
-            <Button onClick={handleSave} variant="outline" className="btn-outline w-full sm:w-auto">
-              <Save className="w-4 h-4 mr-2" />
-              <span className="hidden sm:inline">Save as Draft</span>
-              <span className="sm:hidden">Save</span>
-            </Button>
-            <Button className="btn-secondary w-full sm:w-auto">
-              <Eye className="w-4 h-4 mr-2" />
-              <span className="hidden sm:inline">Preview Changes</span>
-              <span className="sm:hidden">Preview</span>
-            </Button>
-            <Button onClick={handlePublish} className="btn-government w-full sm:w-auto">
-              <Globe className="w-4 h-4 mr-2" />
-              <span className="hidden sm:inline">Publish Live</span>
-              <span className="sm:hidden">Publish</span>
-            </Button>
+        <div className="sticky bottom-0 bg-gradient-cream border-t border-card-border p-4 -mx-3 sm:-mx-6 mt-6 sm:mt-8">
+          <div className="flex flex-col gap-4 max-w-7xl mx-auto">
+            <div className="flex items-center justify-center sm:justify-start gap-2 sm:gap-3">
+              <CheckCircle className="w-4 h-4 text-success" />
+              <span className="text-xs sm:text-sm text-muted-foreground">
+                Auto-saved 30 seconds ago
+              </span>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+              <Button onClick={handleSave} variant="outline" className="btn-outline w-full sm:flex-1">
+                <Save className="w-4 h-4 mr-2" />
+                <span>Save as Draft</span>
+              </Button>
+              <Button className="btn-secondary w-full sm:flex-1">
+                <Eye className="w-4 h-4 mr-2" />
+                <span>Preview Changes</span>
+              </Button>
+              <Button onClick={handlePublish} className="btn-government w-full sm:flex-1">
+                <Globe className="w-4 h-4 mr-2" />
+                <span>Publish Live</span>
+              </Button>
+            </div>
           </div>
         </div>
       </div>
