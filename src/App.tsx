@@ -54,9 +54,8 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
 // Public Route Component - for login/signup pages
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
-  const isAuthenticated = checkAuthentication();
-  // If already authenticated, redirect to dashboard
-  return isAuthenticated ? <Navigate to="/dashboard" replace /> : <>{children}</>;
+  // Always show login/signup pages without redirect
+  return <>{children}</>;
 };
 
 const App = () => {
@@ -67,8 +66,8 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
         <Routes>
-          {/* Root route redirects to login */}
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          {/* Root route always goes to login - no auth check */}
+          <Route path="/" element={<Login />} />
           
           {/* Public Routes */}
           <Route 
