@@ -306,11 +306,12 @@ const UploadDetails = () => {
 
   const renderInitiativesTab = () => (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h3 className="text-heading text-gradient-government font-semibold">Policy Initiatives</h3>
-        <Button className="btn-government">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <h3 className="text-lg sm:text-heading text-gradient-government font-semibold">Policy Initiatives</h3>
+        <Button className="btn-government w-full sm:w-auto">
           <Plus className="w-4 h-4 mr-2" />
-          Add Initiative
+          <span className="hidden sm:inline">Add Initiative</span>
+          <span className="sm:hidden">Add</span>
         </Button>
       </div>
 
@@ -318,13 +319,13 @@ const UploadDetails = () => {
         {initiatives.map((initiative) => (
           <Card key={initiative.id} className="card-government">
             <CardHeader>
-              <div className="flex items-start justify-between">
-                <div>
-                  <CardTitle className="text-lg">{initiative.title}</CardTitle>
-                  <p className="text-muted-foreground mt-1">{initiative.description}</p>
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                <div className="flex-1">
+                  <CardTitle className="text-base sm:text-lg">{initiative.title}</CardTitle>
+                  <p className="text-sm text-muted-foreground mt-1">{initiative.description}</p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant={initiative.status === 'In Progress' ? 'default' : 'secondary'}>
+                <div className="flex items-center justify-between sm:justify-end gap-2">
+                  <Badge variant={initiative.status === 'In Progress' ? 'default' : 'secondary'} className="text-xs">
                     {initiative.status}
                   </Badge>
                   <Button size="sm" variant="outline">
@@ -396,41 +397,80 @@ const UploadDetails = () => {
         </div>
 
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
-          <Link to="/dashboard" className="hover:text-primary transition-colors">Dashboard</Link>
+        <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground mb-6 sm:mb-8 overflow-x-auto">
+          <Link to="/dashboard" className="hover:text-primary transition-colors whitespace-nowrap">Dashboard</Link>
           <span>→</span>
-          <span>Upload Details</span>
+          <span className="whitespace-nowrap">Upload Details</span>
         </div>
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 sm:grid-cols-6 bg-card border border-card-border rounded-lg p-1 gap-1">
-            {tabItems.map((tab) => {
-              const Icon = tab.icon;
-              return (
-                <TabsTrigger 
-                  key={tab.id} 
-                  value={tab.id}
-                  className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-2 py-2 text-xs sm:text-sm"
-                >
-                  <Icon className="w-3 h-3 sm:w-4 sm:h-4" />
-                  <span className="text-xs sm:text-sm truncate">{tab.label.split(' ')[0]}</span>
-                  <span className="hidden lg:inline text-xs sm:text-sm">{tab.label.split(' ').slice(1).join(' ')}</span>
-                </TabsTrigger>
-              );
-            })}
-          </TabsList>
+          {/* Mobile Tabs - Dropdown Style */}
+          <div className="block sm:hidden">
+            <TabsList className="w-full bg-card border border-card-border rounded-lg p-1">
+              <div className="grid grid-cols-3 gap-1 w-full">
+                {tabItems.slice(0, 3).map((tab) => {
+                  const Icon = tab.icon;
+                  return (
+                    <TabsTrigger 
+                      key={tab.id} 
+                      value={tab.id}
+                      className="flex flex-col items-center gap-1 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-1 py-2 text-xs min-h-[60px]"
+                    >
+                      <Icon className="w-4 h-4 flex-shrink-0" />
+                      <span className="text-xs leading-tight text-center">{tab.label.split(' ')[0]}</span>
+                    </TabsTrigger>
+                  );
+                })}
+              </div>
+              <div className="grid grid-cols-3 gap-1 w-full mt-1">
+                {tabItems.slice(3, 6).map((tab) => {
+                  const Icon = tab.icon;
+                  return (
+                    <TabsTrigger 
+                      key={tab.id} 
+                      value={tab.id}
+                      className="flex flex-col items-center gap-1 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-1 py-2 text-xs min-h-[60px]"
+                    >
+                      <Icon className="w-4 h-4 flex-shrink-0" />
+                      <span className="text-xs leading-tight text-center">{tab.label.split(' ')[0]}</span>
+                    </TabsTrigger>
+                  );
+                })}
+              </div>
+            </TabsList>
+          </div>
 
-          <div className="card-government p-4 sm:p-6 lg:p-8">
-            <TabsContent value="profile" className="mt-0">
+          {/* Desktop Tabs */}
+          <div className="hidden sm:block">
+            <TabsList className="grid w-full grid-cols-6 bg-card border border-card-border rounded-lg p-1">
+              {tabItems.map((tab) => {
+                const Icon = tab.icon;
+                return (
+                  <TabsTrigger 
+                    key={tab.id} 
+                    value={tab.id}
+                    className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-2 py-2 text-sm"
+                  >
+                    <Icon className="w-4 h-4" />
+                    <span className="hidden md:inline">{tab.label}</span>
+                    <span className="md:hidden">{tab.label.split(' ')[0]}</span>
+                  </TabsTrigger>
+                );
+              })}
+            </TabsList>
+          </div>
+
+          <div className="card-government p-4 sm:p-6 lg:p-8 overflow-x-hidden">
+            <TabsContent value="profile" className="mt-0 space-y-4 sm:space-y-6">
               {renderProfileTab()}
             </TabsContent>
 
-            <TabsContent value="visual" className="mt-0">
+            <TabsContent value="visual" className="mt-0 space-y-4 sm:space-y-6">
               {renderVisualTab()}
             </TabsContent>
 
-            <TabsContent value="about" className="mt-0">
+            <TabsContent value="about" className="mt-0 space-y-4 sm:space-y-6">
               <div className="space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="biography" className="text-sm font-medium">Biography</Label>
@@ -438,22 +478,22 @@ const UploadDetails = () => {
                     id="biography"
                     value={formData.biography}
                     onChange={(e) => setFormData({ ...formData, biography: e.target.value })}
-                    className="input-government min-h-[200px]"
+                    className="input-government min-h-[150px] sm:min-h-[200px]"
                     placeholder="Write your detailed biography, education, career history, and achievements..."
                   />
                 </div>
               </div>
             </TabsContent>
 
-            <TabsContent value="initiatives" className="mt-0">
+            <TabsContent value="initiatives" className="mt-0 space-y-4 sm:space-y-6">
               {renderInitiativesTab()}
             </TabsContent>
 
-            <TabsContent value="gallery" className="mt-0">
+            <TabsContent value="gallery" className="mt-0 space-y-4 sm:space-y-6">
               <GalleryManager />
             </TabsContent>
 
-            <TabsContent value="content" className="mt-0">
+            <TabsContent value="content" className="mt-0 space-y-4 sm:space-y-6">
               <ContentManager />
             </TabsContent>
           </div>
