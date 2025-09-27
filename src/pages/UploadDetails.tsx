@@ -85,7 +85,7 @@ const UploadDetails = () => {
 
   const renderProfileTab = () => (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
         <div className="space-y-2">
           <Label htmlFor="name" className="text-sm font-medium">Minister Name</Label>
           <Input
@@ -121,7 +121,7 @@ const UploadDetails = () => {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
         <div className="space-y-2">
           <Label htmlFor="email" className="text-sm font-medium">Contact Email</Label>
           <Input
@@ -143,7 +143,7 @@ const UploadDetails = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
         <div className="space-y-2">
           <Label htmlFor="constituency" className="text-sm font-medium">Constituency</Label>
           <Input
@@ -178,7 +178,7 @@ const UploadDetails = () => {
       {/* Social Media Links */}
       <div className="space-y-4">
         <h3 className="font-semibold text-lg text-gradient-government">Social Media Links</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {Object.entries(formData.socialMedia).map(([platform, url]) => (
             <div key={platform} className="space-y-2">
               <Label className="text-sm font-medium capitalize">{platform}</Label>
@@ -266,7 +266,7 @@ const UploadDetails = () => {
               placeholder="https://example.com/logo.png"
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <FileUpload
               accept="image/*"
               maxSize={5}
@@ -279,7 +279,7 @@ const UploadDetails = () => {
               }}
             >
               <div className="text-center">
-                <Shield className="w-12 h-12 text-primary mx-auto mb-4" />
+                <Shield className="w-10 h-10 sm:w-12 sm:h-12 text-primary mx-auto mb-4" />
                 <p className="text-sm text-muted-foreground mb-2">Upload Logo</p>
                 <p className="text-xs text-muted-foreground">
                   Recommended: 200x200px (PNG with transparency)
@@ -287,11 +287,11 @@ const UploadDetails = () => {
               </div>
             </FileUpload>
             {formData.logoUrl && (
-              <div className="flex items-center justify-center border border-card-border rounded-lg p-6 bg-card">
+              <div className="flex items-center justify-center border border-card-border rounded-lg p-4 sm:p-6 bg-card">
                 <img 
                   src={formData.logoUrl} 
                   alt="Logo Preview" 
-                  className="max-w-full max-h-32 object-contain"
+                  className="max-w-full max-h-24 sm:max-h-32 object-contain"
                   onError={(e) => {
                     e.currentTarget.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f3f4f6"/><text x="50%" y="50%" text-anchor="middle" fill="%236b7280">Logo</text></svg>';
                   }}
@@ -334,7 +334,7 @@ const UploadDetails = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
                 <div>
                   <Label className="text-sm text-muted-foreground">Category</Label>
                   <p className="font-medium">{initiative.category}</p>
@@ -343,9 +343,9 @@ const UploadDetails = () => {
                   <Label className="text-sm text-muted-foreground">Budget</Label>
                   <p className="font-medium">{initiative.budget}</p>
                 </div>
-                <div>
+                <div className="sm:col-span-2 lg:col-span-1">
                   <Label className="text-sm text-muted-foreground">Timeline</Label>
-                  <p className="font-medium">{initiative.startDate} to {initiative.endDate}</p>
+                  <p className="font-medium text-sm">{initiative.startDate} to {initiative.endDate}</p>
                 </div>
               </div>
               <div className="space-y-2">
@@ -369,27 +369,28 @@ const UploadDetails = () => {
 
   return (
     <div className="min-h-screen bg-gradient-cream">
-      <div className="p-6">
+      <div className="p-3 sm:p-6">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
-            <Link to="/dashboard" className="btn-outline">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            <Link to="/dashboard" className="btn-outline self-start">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Dashboard
+              <span className="hidden sm:inline">Back to Dashboard</span>
+              <span className="sm:hidden">Back</span>
             </Link>
             <div>
-              <h1 className="text-title text-gradient-golden font-bold">
+              <h1 className="text-xl sm:text-2xl lg:text-title text-gradient-golden font-bold">
                 Upload & Content Management
               </h1>
-              <p className="text-muted-foreground">
+              <p className="text-sm sm:text-base text-muted-foreground">
                 Manage your profile, content, and public information
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 self-start lg:self-center">
             <div className="flex items-center gap-2">
-              <Crown className="w-6 h-6 text-primary" />
-              <Shield className="w-5 h-5 text-accent" />
+              <Crown className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+              <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
             </div>
           </div>
         </div>
@@ -403,23 +404,24 @@ const UploadDetails = () => {
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6 bg-card border border-card-border rounded-lg p-1">
+          <TabsList className="grid w-full grid-cols-3 sm:grid-cols-6 bg-card border border-card-border rounded-lg p-1 gap-1">
             {tabItems.map((tab) => {
               const Icon = tab.icon;
               return (
                 <TabsTrigger 
                   key={tab.id} 
                   value={tab.id}
-                  className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-2 py-2 text-xs sm:text-sm"
                 >
-                  <Icon className="w-4 h-4" />
-                  <span className="hidden sm:inline">{tab.label}</span>
+                  <Icon className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="text-xs sm:text-sm truncate">{tab.label.split(' ')[0]}</span>
+                  <span className="hidden lg:inline text-xs sm:text-sm">{tab.label.split(' ').slice(1).join(' ')}</span>
                 </TabsTrigger>
               );
             })}
           </TabsList>
 
-          <div className="card-government p-8">
+          <div className="card-government p-4 sm:p-6 lg:p-8">
             <TabsContent value="profile" className="mt-0">
               {renderProfileTab()}
             </TabsContent>
@@ -458,25 +460,28 @@ const UploadDetails = () => {
         </Tabs>
 
         {/* Action Buttons */}
-        <div className="flex items-center justify-between mt-8">
-          <div className="flex items-center gap-3">
-            <CheckCircle className="w-5 h-5 text-success" />
-            <span className="text-sm text-muted-foreground">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-8">
+          <div className="flex items-center gap-3 order-2 sm:order-1">
+            <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-success" />
+            <span className="text-xs sm:text-sm text-muted-foreground">
               Auto-saved 30 seconds ago
             </span>
           </div>
-          <div className="flex items-center gap-3">
-            <Button onClick={handleSave} variant="outline" className="btn-outline">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 order-1 sm:order-2">
+            <Button onClick={handleSave} variant="outline" className="btn-outline w-full sm:w-auto">
               <Save className="w-4 h-4 mr-2" />
-              Save as Draft
+              <span className="hidden sm:inline">Save as Draft</span>
+              <span className="sm:hidden">Save</span>
             </Button>
-            <Button className="btn-secondary">
+            <Button className="btn-secondary w-full sm:w-auto">
               <Eye className="w-4 h-4 mr-2" />
-              Preview Changes
+              <span className="hidden sm:inline">Preview Changes</span>
+              <span className="sm:hidden">Preview</span>
             </Button>
-            <Button onClick={handlePublish} className="btn-government">
+            <Button onClick={handlePublish} className="btn-government w-full sm:w-auto">
               <Globe className="w-4 h-4 mr-2" />
-              Publish Live
+              <span className="hidden sm:inline">Publish Live</span>
+              <span className="sm:hidden">Publish</span>
             </Button>
           </div>
         </div>
