@@ -1,0 +1,488 @@
+import React, { useState } from 'react';
+import { 
+  Crown, Shield, ArrowLeft, Save, Eye, Calendar, Upload,
+  User, Image, FileText, Briefcase, Camera, FolderOpen,
+  CheckCircle, AlertCircle, Plus, X, Edit, Globe
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import FileUpload from '@/components/FileUpload';
+import GalleryManager from '@/components/GalleryManager';
+import ContentManager from '@/components/ContentManager';
+
+const UploadDetails = () => {
+  const [activeTab, setActiveTab] = useState('profile');
+  const [formData, setFormData] = useState({
+    name: 'Hon. Rajesh Kumar',
+    party: 'Bharatiya Janata Party',
+    tagline: 'Serving the Nation with Dedication',
+    email: 'rajesh.kumar@gov.in',
+    phone: '+91 98765 43210',
+    constituency: 'Delhi North',
+    portfolio: 'Health & Family Welfare',
+    address: 'Ministry of Health, Nirman Bhavan, New Delhi',
+    bannerUrl: '',
+    logoUrl: '',
+    biography: '',
+    socialMedia: {
+      twitter: '',
+      facebook: '',
+      instagram: '',
+      linkedin: ''
+    }
+  });
+
+  const [initiatives, setInitiatives] = useState([
+    {
+      id: 1,
+      title: 'Digital Health Initiative',
+      description: 'Implementing digital health records across all government hospitals',
+      category: 'Healthcare',
+      status: 'In Progress',
+      progress: 75,
+      budget: '₹50 Crores',
+      startDate: '2024-01-15',
+      endDate: '2024-12-31'
+    },
+    {
+      id: 2,
+      title: 'Rural Telemedicine Program',
+      description: 'Connecting rural areas with specialized doctors through telemedicine',
+      category: 'Healthcare',
+      status: 'Planning',
+      progress: 25,
+      budget: '₹25 Crores',
+      startDate: '2024-03-01',
+      endDate: '2025-02-28'
+    }
+  ]);
+
+  const tabItems = [
+    { id: 'profile', label: 'Profile Information', icon: User },
+    { id: 'visual', label: 'Visual Assets', icon: Image },
+    { id: 'about', label: 'About Us', icon: FileText },
+    { id: 'initiatives', label: 'Initiatives', icon: Briefcase },
+    { id: 'gallery', label: 'Gallery', icon: Camera },
+    { id: 'content', label: 'Content Management', icon: FolderOpen }
+  ];
+
+  const handleSave = () => {
+    console.log('Saving data...', formData);
+    // Here you would save the data
+  };
+
+  const handlePublish = () => {
+    console.log('Publishing...', formData);
+    // Here you would publish the content
+  };
+
+  const renderProfileTab = () => (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <Label htmlFor="name" className="text-sm font-medium">Minister Name</Label>
+          <Input
+            id="name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            className="input-government"
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="party" className="text-sm font-medium">Political Party</Label>
+          <Select value={formData.party} onValueChange={(value) => setFormData({ ...formData, party: value })}>
+            <SelectTrigger className="input-government">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Bharatiya Janata Party">Bharatiya Janata Party (BJP)</SelectItem>
+              <SelectItem value="Indian National Congress">Indian National Congress (INC)</SelectItem>
+              <SelectItem value="Aam Aadmi Party">Aam Aadmi Party (AAP)</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="tagline" className="text-sm font-medium">Tagline/Slogan</Label>
+        <Input
+          id="tagline"
+          value={formData.tagline}
+          onChange={(e) => setFormData({ ...formData, tagline: e.target.value })}
+          className="input-government"
+          placeholder="Your inspiring tagline"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <Label htmlFor="email" className="text-sm font-medium">Contact Email</Label>
+          <Input
+            id="email"
+            type="email"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            className="input-government"
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="phone" className="text-sm font-medium">Phone Number</Label>
+          <Input
+            id="phone"
+            value={formData.phone}
+            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            className="input-government"
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <Label htmlFor="constituency" className="text-sm font-medium">Constituency</Label>
+          <Input
+            id="constituency"
+            value={formData.constituency}
+            onChange={(e) => setFormData({ ...formData, constituency: e.target.value })}
+            className="input-government"
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="portfolio" className="text-sm font-medium">Portfolio</Label>
+          <Input
+            id="portfolio"
+            value={formData.portfolio}
+            onChange={(e) => setFormData({ ...formData, portfolio: e.target.value })}
+            className="input-government"
+          />
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="address" className="text-sm font-medium">Office Address</Label>
+        <Textarea
+          id="address"
+          value={formData.address}
+          onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+          className="input-government"
+          rows={3}
+        />
+      </div>
+
+      {/* Social Media Links */}
+      <div className="space-y-4">
+        <h3 className="font-semibold text-lg text-gradient-government">Social Media Links</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {Object.entries(formData.socialMedia).map(([platform, url]) => (
+            <div key={platform} className="space-y-2">
+              <Label className="text-sm font-medium capitalize">{platform}</Label>
+              <Input
+                value={url}
+                onChange={(e) => setFormData({
+                  ...formData,
+                  socialMedia: { ...formData.socialMedia, [platform]: e.target.value }
+                })}
+                className="input-government"
+                placeholder={`Your ${platform} profile URL`}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderVisualTab = () => (
+    <div className="space-y-8">
+      {/* Banner Management */}
+      <Card className="card-government">
+        <CardHeader>
+          <CardTitle className="text-gradient-government flex items-center gap-2">
+            <Image className="w-5 h-5" />
+            Banner Management
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="bannerUrl" className="text-sm font-medium">Banner URL</Label>
+            <Input
+              id="bannerUrl"
+              value={formData.bannerUrl}
+              onChange={(e) => setFormData({ ...formData, bannerUrl: e.target.value })}
+              className="input-government"
+              placeholder="https://example.com/banner.jpg"
+            />
+          </div>
+          <FileUpload
+            accept="image/*"
+            maxSize={10}
+            onFileSelect={(files) => {
+              if (files.length > 0) {
+                const file = files[0];
+                const url = URL.createObjectURL(file);
+                setFormData({ ...formData, bannerUrl: url });
+              }
+            }}
+          >
+            Recommended size: 1920x600px (PNG, JPG, WebP)
+          </FileUpload>
+          {formData.bannerUrl && (
+            <div className="rounded-lg overflow-hidden border border-card-border">
+              <img 
+                src={formData.bannerUrl} 
+                alt="Banner Preview" 
+                className="w-full h-48 object-cover"
+                onError={(e) => {
+                  e.currentTarget.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200" viewBox="0 0 400 200"><rect width="400" height="200" fill="%23f3f4f6"/><text x="50%" y="50%" text-anchor="middle" fill="%236b7280">Banner Preview</text></svg>';
+                }}
+              />
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Logo Management */}
+      <Card className="card-government">
+        <CardHeader>
+          <CardTitle className="text-gradient-government flex items-center gap-2">
+            <Shield className="w-5 h-5" />
+            Logo Management
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="logoUrl" className="text-sm font-medium">Logo URL</Label>
+            <Input
+              id="logoUrl"
+              value={formData.logoUrl}
+              onChange={(e) => setFormData({ ...formData, logoUrl: e.target.value })}
+              className="input-government"
+              placeholder="https://example.com/logo.png"
+            />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FileUpload
+              accept="image/*"
+              maxSize={5}
+              onFileSelect={(files) => {
+                if (files.length > 0) {
+                  const file = files[0];
+                  const url = URL.createObjectURL(file);
+                  setFormData({ ...formData, logoUrl: url });
+                }
+              }}
+            >
+              <div className="text-center">
+                <Shield className="w-12 h-12 text-primary mx-auto mb-4" />
+                <p className="text-sm text-muted-foreground mb-2">Upload Logo</p>
+                <p className="text-xs text-muted-foreground">
+                  Recommended: 200x200px (PNG with transparency)
+                </p>
+              </div>
+            </FileUpload>
+            {formData.logoUrl && (
+              <div className="flex items-center justify-center border border-card-border rounded-lg p-6 bg-card">
+                <img 
+                  src={formData.logoUrl} 
+                  alt="Logo Preview" 
+                  className="max-w-full max-h-32 object-contain"
+                  onError={(e) => {
+                    e.currentTarget.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f3f4f6"/><text x="50%" y="50%" text-anchor="middle" fill="%236b7280">Logo</text></svg>';
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
+  const renderInitiativesTab = () => (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h3 className="text-heading text-gradient-government font-semibold">Policy Initiatives</h3>
+        <Button className="btn-government">
+          <Plus className="w-4 h-4 mr-2" />
+          Add Initiative
+        </Button>
+      </div>
+
+      <div className="grid gap-6">
+        {initiatives.map((initiative) => (
+          <Card key={initiative.id} className="card-government">
+            <CardHeader>
+              <div className="flex items-start justify-between">
+                <div>
+                  <CardTitle className="text-lg">{initiative.title}</CardTitle>
+                  <p className="text-muted-foreground mt-1">{initiative.description}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Badge variant={initiative.status === 'In Progress' ? 'default' : 'secondary'}>
+                    {initiative.status}
+                  </Badge>
+                  <Button size="sm" variant="outline">
+                    <Edit className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div>
+                  <Label className="text-sm text-muted-foreground">Category</Label>
+                  <p className="font-medium">{initiative.category}</p>
+                </div>
+                <div>
+                  <Label className="text-sm text-muted-foreground">Budget</Label>
+                  <p className="font-medium">{initiative.budget}</p>
+                </div>
+                <div>
+                  <Label className="text-sm text-muted-foreground">Timeline</Label>
+                  <p className="font-medium">{initiative.startDate} to {initiative.endDate}</p>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label className="text-sm font-medium">Progress</Label>
+                  <span className="text-sm font-medium">{initiative.progress}%</span>
+                </div>
+                <div className="w-full bg-muted rounded-full h-2">
+                  <div 
+                    className="bg-primary h-2 rounded-full transition-all duration-1000" 
+                    style={{ width: `${initiative.progress}%` }}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-gradient-cream">
+      <div className="p-6">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-4">
+            <Link to="/dashboard" className="btn-outline">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Dashboard
+            </Link>
+            <div>
+              <h1 className="text-title text-gradient-golden font-bold">
+                Upload & Content Management
+              </h1>
+              <p className="text-muted-foreground">
+                Manage your profile, content, and public information
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <Crown className="w-6 h-6 text-primary" />
+              <Shield className="w-5 h-5 text-accent" />
+            </div>
+          </div>
+        </div>
+
+        {/* Breadcrumb */}
+        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
+          <Link to="/dashboard" className="hover:text-primary transition-colors">Dashboard</Link>
+          <span>→</span>
+          <span>Upload Details</span>
+        </div>
+
+        {/* Tabs */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <TabsList className="grid w-full grid-cols-6 bg-card border border-card-border rounded-lg p-1">
+            {tabItems.map((tab) => {
+              const Icon = tab.icon;
+              return (
+                <TabsTrigger 
+                  key={tab.id} 
+                  value={tab.id}
+                  className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                >
+                  <Icon className="w-4 h-4" />
+                  <span className="hidden sm:inline">{tab.label}</span>
+                </TabsTrigger>
+              );
+            })}
+          </TabsList>
+
+          <div className="card-government p-8">
+            <TabsContent value="profile" className="mt-0">
+              {renderProfileTab()}
+            </TabsContent>
+
+            <TabsContent value="visual" className="mt-0">
+              {renderVisualTab()}
+            </TabsContent>
+
+            <TabsContent value="about" className="mt-0">
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="biography" className="text-sm font-medium">Biography</Label>
+                  <Textarea
+                    id="biography"
+                    value={formData.biography}
+                    onChange={(e) => setFormData({ ...formData, biography: e.target.value })}
+                    className="input-government min-h-[200px]"
+                    placeholder="Write your detailed biography, education, career history, and achievements..."
+                  />
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="initiatives" className="mt-0">
+              {renderInitiativesTab()}
+            </TabsContent>
+
+            <TabsContent value="gallery" className="mt-0">
+              <GalleryManager />
+            </TabsContent>
+
+            <TabsContent value="content" className="mt-0">
+              <ContentManager />
+            </TabsContent>
+          </div>
+        </Tabs>
+
+        {/* Action Buttons */}
+        <div className="flex items-center justify-between mt-8">
+          <div className="flex items-center gap-3">
+            <CheckCircle className="w-5 h-5 text-success" />
+            <span className="text-sm text-muted-foreground">
+              Auto-saved 30 seconds ago
+            </span>
+          </div>
+          <div className="flex items-center gap-3">
+            <Button onClick={handleSave} variant="outline" className="btn-outline">
+              <Save className="w-4 h-4 mr-2" />
+              Save as Draft
+            </Button>
+            <Button className="btn-secondary">
+              <Eye className="w-4 h-4 mr-2" />
+              Preview Changes
+            </Button>
+            <Button onClick={handlePublish} className="btn-government">
+              <Globe className="w-4 h-4 mr-2" />
+              Publish Live
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default UploadDetails;
