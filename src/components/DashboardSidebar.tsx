@@ -61,7 +61,7 @@ const DashboardSidebar = ({ activeSection, onSectionChange, isOpen = false, onCl
 
   return (
     <div className={cn(
-      "fixed top-0 left-0 w-72 h-screen bg-card border-r border-card-border shadow-government flex flex-col z-40 transition-transform duration-300 ease-in-out",
+      "fixed top-0 left-0 w-72 h-screen bg-card border-r border-card-border shadow-government flex flex-col z-40 transition-transform duration-300 ease-in-out sidebar-mobile",
       "lg:translate-x-0",
       isOpen ? "translate-x-0" : "-translate-x-full"
     )}>

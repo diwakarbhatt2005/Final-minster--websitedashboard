@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Combobox, type ComboboxOption } from '@/components/ui/combobox';
 import { Badge } from '@/components/ui/badge';
 import FileUpload from '@/components/FileUpload';
 import GalleryManager from '@/components/GalleryManager';
@@ -97,16 +97,27 @@ const UploadDetails = () => {
         </div>
         <div className="space-y-2">
           <Label htmlFor="party" className="text-sm font-medium">Political Party</Label>
-          <Select value={formData.party} onValueChange={(value) => setFormData({ ...formData, party: value })}>
-            <SelectTrigger className="input-government">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Bharatiya Janata Party">Bharatiya Janata Party (BJP)</SelectItem>
-              <SelectItem value="Indian National Congress">Indian National Congress (INC)</SelectItem>
-              <SelectItem value="Aam Aadmi Party">Aam Aadmi Party (AAP)</SelectItem>
-            </SelectContent>
-          </Select>
+          <Combobox
+            options={[
+              { value: "Bharatiya Janata Party", label: "Bharatiya Janata Party (BJP)" },
+              { value: "Indian National Congress", label: "Indian National Congress (INC)" },
+              { value: "Aam Aadmi Party", label: "Aam Aadmi Party (AAP)" },
+              { value: "Bahujan Samaj Party", label: "Bahujan Samaj Party (BSP)" },
+              { value: "Communist Party of India", label: "Communist Party of India (CPI)" },
+              { value: "Trinamool Congress", label: "All India Trinamool Congress (AITC)" },
+              { value: "Dravida Munnetra Kazhagam", label: "Dravida Munnetra Kazhagam (DMK)" },
+              { value: "Shiv Sena", label: "Shiv Sena" },
+              { value: "Nationalist Congress Party", label: "Nationalist Congress Party (NCP)" },
+              { value: "Janata Dal United", label: "Janata Dal (United)" }
+            ]}
+            value={formData.party}
+            onValueChange={(value) => setFormData({ ...formData, party: value })}
+            placeholder="Select or type political party..."
+            searchPlaceholder="Search political parties..."
+            allowCustomValues={true}
+            emptyMessage="No political party found. You can add a custom one."
+            className="input-government"
+          />
         </div>
       </div>
 
@@ -146,19 +157,53 @@ const UploadDetails = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
         <div className="space-y-2">
           <Label htmlFor="constituency" className="text-sm font-medium">Constituency</Label>
-          <Input
-            id="constituency"
+          <Combobox
+            options={[
+              { value: "Delhi North", label: "Delhi North" },
+              { value: "Delhi South", label: "Delhi South" },
+              { value: "Mumbai North", label: "Mumbai North" },
+              { value: "Mumbai South", label: "Mumbai South" },
+              { value: "Chennai North", label: "Chennai North" },
+              { value: "Chennai South", label: "Chennai South" },
+              { value: "Kolkata North", label: "Kolkata North" },
+              { value: "Kolkata South", label: "Kolkata South" },
+              { value: "Bangalore North", label: "Bangalore North" },
+              { value: "Bangalore South", label: "Bangalore South" },
+              { value: "Hyderabad", label: "Hyderabad" },
+              { value: "Pune", label: "Pune" }
+            ]}
             value={formData.constituency}
-            onChange={(e) => setFormData({ ...formData, constituency: e.target.value })}
+            onValueChange={(value) => setFormData({ ...formData, constituency: value })}
+            placeholder="Select or type constituency..."
+            searchPlaceholder="Search constituencies..."
+            allowCustomValues={true}
+            emptyMessage="No constituency found. You can add a custom one."
             className="input-government"
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="portfolio" className="text-sm font-medium">Portfolio</Label>
-          <Input
-            id="portfolio"
+          <Label htmlFor="portfolio" className="text-sm font-medium">Portfolio/Ministry</Label>
+          <Combobox
+            options={[
+              { value: "Health & Family Welfare", label: "Ministry of Health & Family Welfare" },
+              { value: "Education", label: "Ministry of Education" },
+              { value: "Finance", label: "Ministry of Finance" },
+              { value: "Home Affairs", label: "Ministry of Home Affairs" },
+              { value: "External Affairs", label: "Ministry of External Affairs" },
+              { value: "Defence", label: "Ministry of Defence" },
+              { value: "Railways", label: "Ministry of Railways" },
+              { value: "Information Technology", label: "Ministry of Electronics & Information Technology" },
+              { value: "Agriculture", label: "Ministry of Agriculture & Farmers Welfare" },
+              { value: "Commerce & Industry", label: "Ministry of Commerce & Industry" },
+              { value: "Environment", label: "Ministry of Environment, Forest & Climate Change" },
+              { value: "Rural Development", label: "Ministry of Rural Development" }
+            ]}
             value={formData.portfolio}
-            onChange={(e) => setFormData({ ...formData, portfolio: e.target.value })}
+            onValueChange={(value) => setFormData({ ...formData, portfolio: value })}
+            placeholder="Select or type portfolio/ministry..."
+            searchPlaceholder="Search ministries..."
+            allowCustomValues={true}
+            emptyMessage="No ministry found. You can add a custom one."
             className="input-government"
           />
         </div>
@@ -369,8 +414,8 @@ const UploadDetails = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-cream pb-32 sm:pb-24">
-      <div className="p-3 sm:p-6">
+    <div className="min-h-screen bg-gradient-cream pb-32 sm:pb-24 overflow-x-hidden">
+      <div className="p-3 sm:p-6 max-w-full">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
@@ -405,7 +450,7 @@ const UploadDetails = () => {
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          {/* Mobile Tabs - Dropdown Style */}
+          {/* Mobile Tabs - Improved Grid Layout */}
           <div className="block sm:hidden">
             <TabsList className="w-full bg-card border border-card-border rounded-lg p-1">
               <div className="grid grid-cols-3 gap-1 w-full">
@@ -415,10 +460,10 @@ const UploadDetails = () => {
                     <TabsTrigger 
                       key={tab.id} 
                       value={tab.id}
-                      className="flex flex-col items-center gap-1 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-1 py-2 text-xs min-h-[60px]"
+                      className="flex flex-col items-center gap-1 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-1 py-2 text-[10px] sm:text-xs min-h-[50px] max-w-full overflow-hidden"
                     >
-                      <Icon className="w-4 h-4 flex-shrink-0" />
-                      <span className="text-xs leading-tight text-center">{tab.label.split(' ')[0]}</span>
+                      <Icon className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                      <span className="text-[10px] sm:text-xs leading-tight text-center truncate w-full">{tab.label.split(' ')[0]}</span>
                     </TabsTrigger>
                   );
                 })}
@@ -430,10 +475,10 @@ const UploadDetails = () => {
                     <TabsTrigger 
                       key={tab.id} 
                       value={tab.id}
-                      className="flex flex-col items-center gap-1 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-1 py-2 text-xs min-h-[60px]"
+                      className="flex flex-col items-center gap-1 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-1 py-2 text-[10px] sm:text-xs min-h-[50px] max-w-full overflow-hidden"
                     >
-                      <Icon className="w-4 h-4 flex-shrink-0" />
-                      <span className="text-xs leading-tight text-center">{tab.label.split(' ')[0]}</span>
+                      <Icon className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                      <span className="text-[10px] sm:text-xs leading-tight text-center truncate w-full">{tab.label.split(' ')[0]}</span>
                     </TabsTrigger>
                   );
                 })}
